@@ -16,8 +16,9 @@ public class DBTester {
     // Información de conexión
     // Para conexiones directas, requerimos: driver, cadena de conexión,
     // usuario y clave
+    // Previamente: org.apache.derby.jdbc.ClientDriver
     private static final String JDBC_DRIVER =
-           "org.apache.derby.jdbc.ClientDriver";
+           "org.postgresql.Driver";
 
     // TODO: Definir la cadena de conexion a la base de datos
     /*********************************************************/
