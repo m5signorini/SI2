@@ -17,7 +17,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ssii2.visa.PagoBean;
-import ssii2.visa.dao.VisaDAO;
+
+import ssii2.visa.VisaDAOWSService; // Stub generado automáticamente
+import ssii2.visa.VisaDAOWS; // Stub generado automáticamente
+import javax.xml.ws.WebServiceRef;
+import javax.xml.ws.BindingProvider;
 
 /**
  *
@@ -44,26 +48,45 @@ public class DelPagos extends ServletRaiz {
     * Procesa una petici&oacute;n HTTP tanto <code>GET</code> como <code>POST</code>.
     * @param request objeto de petici&oacute;n
     * @param response objeto de respuesta
-    */    
+    */   
+    @WebServiceRef 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {        
         
-		VisaDAO dao = new VisaDAO();
+		// MODIFIED
+        // VisaDAO dao = new VisaDAO();
+        /***********/
+        VisaDAOWSService service = new VisaDAOWSService();
+        VisaDAOWS dao = service.getVisaDAOWSPort();
+        /***********/
+        /***********/
+        BindingProvider bp = (BindingProvider) dao;
+        String remote_server_url = getServletContext().getInitParameter("visadaows");
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, remote_server_url);
+        /***********/
 		
 		/* Se recoge de la petici&oacute;n el par&aacute;metro idComercio*/  
 		String idComercio = request.getParameter(PARAM_ID_COMERCIO);
 		
 		/* Petici&oacute;n de los pagos para el comercio */
-		int ret = dao.delPagos(idComercio);        
-
-		if (ret != 0) {
-			request.setAttribute(ATTR_BORRADOS, ret);
-			reenvia("/borradook.jsp", request, response);
-		}
-		else {
-			reenvia("/borradoerror.jsp", request, response);
-		}	
-        return;       
+        // MODIFIED
+        // Error managing
+        /*****************/
+        try {
+            int ret = dao.delPagos(idComercio);
+            if (ret != 0) {
+                request.setAttribute(ATTR_BORRADOS, ret);
+                reenvia("/borradook.jsp", request, response);
+            }
+            else {
+                reenvia("/borradoerror.jsp", request, response);
+            }
+        } catch (Exception e) {
+            enviaError(e, request, response);
+            return;
+        }
+        /*****************/
+        return;
     }      
     
    /** 

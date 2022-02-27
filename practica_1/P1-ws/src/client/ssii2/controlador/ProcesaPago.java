@@ -44,7 +44,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import ssii2.visa.*;
-import ssii2.visa.dao.VisaDAO;
+
+import ssii2.visa.VisaDAOWSService; // Stub generado automáticamente
+import ssii2.visa.VisaDAOWS; // Stub generado automáticamente
+import javax.xml.ws.WebServiceRef;
+import javax.xml.ws.BindingProvider;
 
 /**
  *
@@ -134,6 +138,7 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
     * @param response objeto de respuesta
     */
     @Override
+    @WebServiceRef
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
                  
@@ -148,7 +153,18 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
             return;
         }
 
-		VisaDAO dao = new VisaDAO();
+        // MODIFIED
+        // VisaDAO dao = new VisaDAO();
+        /***********/
+        VisaDAOWSService service = new VisaDAOWSService();
+        VisaDAOWS dao = service.getVisaDAOWSPort();
+        /***********/
+        /***********/
+        BindingProvider bp = (BindingProvider) dao;
+        String remote_server_url = getServletContext().getInitParameter("visadaows");
+        bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, remote_server_url);
+        /***********/
+
 		HttpSession sesion = request.getSession(false);
 		if (sesion != null) {
 			pago = (PagoBean) sesion.getAttribute(ComienzaPago.ATTR_PAGO);
@@ -166,15 +182,30 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
         // Almacenamos la tarjeta en el pago
         pago.setTarjeta(tarjeta);
 		
-        if (! dao.compruebaTarjeta(tarjeta)) {           
-            enviaError(new Exception("Tarjeta no autorizada:"), request, response);
+        // MODIFIED
+        // Added new exception managers
+        /***********/
+        try {
+            if (! dao.compruebaTarjeta(tarjeta)) {           
+                enviaError(new Exception("Tarjeta no autorizada:"), request, response);
+                return;
+            }
+        } catch (Exception e) {
+            enviaError(e, request, response);
             return;
         }
 
-	if (! dao.realizaPago(pago)) {      
-            enviaError(new Exception("Pago incorrecto"), request, response);
+        try {
+            // Use null instead of boolean
+            if (dao.realizaPago(pago) == null) {      
+                enviaError(new Exception("Pago incorrecto"), request, response);
+                return;
+            }
+        } catch (Exception e) {
+            enviaError(e, request, response);
             return;
         }
+        /************/
 
         request.setAttribute(ComienzaPago.ATTR_PAGO, pago);
         if (sesion != null) sesion.invalidate();

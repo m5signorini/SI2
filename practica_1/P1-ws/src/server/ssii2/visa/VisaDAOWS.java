@@ -10,7 +10,7 @@
  *
  */
 
-package ssii2.visa.dao;
+package ssii2.visa;
 import ssii2.visa.*;
 
 import java.sql.Connection;
@@ -28,7 +28,7 @@ import javax.jws.WebService;
  * @author jaime
  */
 @WebService()
-public class VisaDAO extends DBTester {
+public class VisaDAOWS extends DBTester {
 
     private boolean debug = false;
 
@@ -81,7 +81,7 @@ public class VisaDAO extends DBTester {
     /**
      * Constructor de la clase     
      */
-    public VisaDAO() {
+    public VisaDAOWS() {
         return;
     }
 
@@ -209,7 +209,7 @@ public class VisaDAO extends DBTester {
      * @return
      */
     @WebMethod(operationName = "realizaPago")
-    public synchronized boolean realizaPago(@WebParam(name = "pago") PagoBean pago) {
+    public synchronized PagoBean realizaPago(@WebParam(name = "pago") PagoBean pago) {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -223,7 +223,7 @@ public class VisaDAO extends DBTester {
         // Comprobar id.transaccion - si no existe,
         // es que la tarjeta no fue comprobada
         if (pago.getIdTransaccion() == null) {
-            return false;
+            return null;
         }
 
         // Registrar el pago en la base de datos
@@ -311,10 +311,14 @@ public class VisaDAO extends DBTester {
                     closeConnection(con); con = null;
                 }
             } catch (SQLException e) {
+
             }
         }
 
-        return ret;
+        if(ret) {
+            return pago;
+        }
+        return null;
     }
 
 
@@ -323,7 +327,8 @@ public class VisaDAO extends DBTester {
      * @param idComercio
      * @return
      */
-    public PagoBean[] getPagos(String idComercio) {
+    @WebMethod(operationName = "getPagos")
+    public ArrayList<PagoBean> getPagos(@WebParam(name = "idComercio") String idComercio) {
 
         PreparedStatement pstmt = null;
         Connection pcon = null;
@@ -387,7 +392,7 @@ public class VisaDAO extends DBTester {
             }
         }
 
-        return ret;
+        return pagos;
     }
 
     // Borrar los pagos asociados a un comercio
@@ -396,7 +401,8 @@ public class VisaDAO extends DBTester {
      * @param idComercio
      * @return numero de registros afectados
      */
-    public int delPagos(String idComercio) {
+    @WebMethod(operationName = "delPagos")
+    public int delPagos(@WebParam(name = "idComercio") String idComercio) {
 
         PreparedStatement pstmt = null;
         Connection pcon = null;

@@ -1,4 +1,4 @@
-package ssii2.visa.dao;
+package ssii2.visa;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
