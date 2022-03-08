@@ -60,7 +60,6 @@ public class GetPagos extends ServletRaiz {
     * @param request objeto de petici&oacute;n
     * @param response objeto de respuesta
     */
-    @WebServiceRef
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {        
         
@@ -81,15 +80,10 @@ public class GetPagos extends ServletRaiz {
         // MODIFIED
         // Note that change between arrayList and array
         /***********/
-        try {
-            //List<PagoBean> pagos_list = dao.getPagos(idComercio);
-            PagoBean[] pagos = dao.getPagos(idComercio);
-            request.setAttribute(ATTR_PAGOS, pagos);
-            reenvia("/listapagos.jsp", request, response);
-        } catch (Exception e) {
-            enviaError(e, request, response);
-            return;
-        }
+        //List<PagoBean> pagos_list = dao.getPagos(idComercio);
+        PagoBean[] pagos = dao.getPagos(idComercio);
+        request.setAttribute(ATTR_PAGOS, pagos);
+        reenvia("/listapagos.jsp", request, response);
         /***********/
         return;       
     }      

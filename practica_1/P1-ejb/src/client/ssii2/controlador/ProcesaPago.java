@@ -147,7 +147,6 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
     * @param response objeto de respuesta
     */
     @Override
-    @WebServiceRef
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
                  
@@ -191,25 +190,15 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
         // MODIFIED
         // Added new exception managers
         /***********/
-        try {
-            if (! dao.compruebaTarjeta(tarjeta)) {           
-                enviaError(new Exception("Tarjeta no autorizada:"), request, response);
-                return;
-            }
-        } catch (Exception e) {
-            enviaError(e, request, response);
+        if (! dao.compruebaTarjeta(tarjeta)) {           
+            enviaError(new Exception("Tarjeta no autorizada:"), request, response);
             return;
         }
 
-        try {
-            // Use null instead of boolean
-            pago = dao.realizaPago(pago);
-            if (pago == null) {      
-                enviaError(new Exception("Pago incorrecto"), request, response);
-                return;
-            }
-        } catch (Exception e) {
-            enviaError(e, request, response);
+        // Use null instead of boolean
+        pago = dao.realizaPago(pago);
+        if (pago == null) {      
+            enviaError(new Exception("Pago incorrecto"), request, response);
             return;
         }
         /************/

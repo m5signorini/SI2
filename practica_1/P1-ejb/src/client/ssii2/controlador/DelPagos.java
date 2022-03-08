@@ -78,18 +78,13 @@ public class DelPagos extends ServletRaiz {
         // MODIFIED
         // Error managing
         /*****************/
-        try {
-            int ret = dao.delPagos(idComercio);
-            if (ret != 0) {
-                request.setAttribute(ATTR_BORRADOS, ret);
-                reenvia("/borradook.jsp", request, response);
-            }
-            else {
-                reenvia("/borradoerror.jsp", request, response);
-            }
-        } catch (Exception e) {
-            enviaError(e, request, response);
-            return;
+        int ret = dao.delPagos(idComercio);
+        if (ret != 0) {
+            request.setAttribute(ATTR_BORRADOS, ret);
+            reenvia("/borradook.jsp", request, response);
+        }
+        else {
+            reenvia("/borradoerror.jsp", request, response);
         }
         /*****************/
         return;
