@@ -45,10 +45,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import ssii2.visa.*;
 
-import ssii2.visa.VisaDAOWSService; // Stub generado automáticamente
-import ssii2.visa.VisaDAOWS; // Stub generado automáticamente
+/* import ssii2.visa.VisaDAOWSService; // Stub generado automáticamente
+import ssii2.visa.VisaDAOWS; // Stub generado automáticamente */
 import javax.xml.ws.WebServiceRef;
 import javax.xml.ws.BindingProvider;
+
+import javax.ejb.EJB;
+import ssii2.visa.VisaDAOLocal;
 
 /**
  *
@@ -108,6 +111,12 @@ public class ProcesaPago extends ServletRaiz {
      * Atribute que hace referencia la bean Pago
      */
     public final static String ATTR_PAGO = "pago";
+
+    /**
+     * Objeto proxy que permite acceder al EJB local, con su correspondiente anotación que lo declara como tal 
+     */
+    @EJB(name="VisaDAOBean", beanInterface=VisaDAOLocal.class)
+    private VisaDAOLocal dao;
     
   private static void displayInterfaceInformation(
          NetworkInterface netint) throws SocketException {
@@ -153,17 +162,14 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
             return;
         }
 
-        // MODIFIED
-        // VisaDAO dao = new VisaDAO();
-        /***********/
+        // MODIFIED, Toda esta parte se va fuera en el apartado 1-B
+        /*
         VisaDAOWSService service = new VisaDAOWSService();
         VisaDAOWS dao = service.getVisaDAOWSPort();
-        /***********/
-        /***********/
         BindingProvider bp = (BindingProvider) dao;
         String remote_server_url = getServletContext().getInitParameter("visadaows");
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, remote_server_url);
-        /***********/
+        */
 
 		HttpSession sesion = request.getSession(false);
 		if (sesion != null) {

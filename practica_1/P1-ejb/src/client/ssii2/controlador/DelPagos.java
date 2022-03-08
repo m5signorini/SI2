@@ -18,10 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ssii2.visa.PagoBean;
 
-import ssii2.visa.VisaDAOWSService; // Stub generado automáticamente
-import ssii2.visa.VisaDAOWS; // Stub generado automáticamente
+/*import ssii2.visa.VisaDAOWSService; // Stub generado automáticamente
+import ssii2.visa.VisaDAOWS; // Stub generado automáticamente */
 import javax.xml.ws.WebServiceRef;
 import javax.xml.ws.BindingProvider;
+
+import javax.ejb.EJB;
+import ssii2.visa.VisaDAOLocal;
 
 /**
  *
@@ -43,6 +46,12 @@ public class DelPagos extends ServletRaiz {
      * Atribute que hace referencia a la lista de pagos
      */
     public final static String ATTR_BORRADOS = "borrados";
+
+    /**
+     * Objeto proxy que permite acceder al EJB local, con su correspondiente anotación que lo declara como tal 
+     */
+    @EJB(name="VisaDAOBean", beanInterface=VisaDAOLocal.class)
+    private VisaDAOLocal dao;
     
     /** 
     * Procesa una petici&oacute;n HTTP tanto <code>GET</code> como <code>POST</code>.
@@ -54,17 +63,14 @@ public class DelPagos extends ServletRaiz {
     throws ServletException, IOException {        
         
 		// MODIFIED
-        // VisaDAO dao = new VisaDAO();
-        /***********/
+        /*
         VisaDAOWSService service = new VisaDAOWSService();
         VisaDAOWS dao = service.getVisaDAOWSPort();
-        /***********/
-        /***********/
         BindingProvider bp = (BindingProvider) dao;
         String remote_server_url = getServletContext().getInitParameter("visadaows");
         bp.getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, remote_server_url);
-        /***********/
-		
+		*/
+
 		/* Se recoge de la petici&oacute;n el par&aacute;metro idComercio*/  
 		String idComercio = request.getParameter(PARAM_ID_COMERCIO);
 		
