@@ -58,7 +58,6 @@ public class DelPagos extends ServletRaiz {
     * @param request objeto de petici&oacute;n
     * @param response objeto de respuesta
     */   
-    @WebServiceRef 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {        
         

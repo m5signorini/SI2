@@ -136,8 +136,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
      * @param tarjeta Objeto con toda la informacion de la tarjeta
      * @return true si la comprobacion contra las tarjetas contenidas en
      *         en la tabla TARJETA fue satisfactoria, false en caso contrario     */
-    @WebMethod(operationName = "compruebaTarjeta")
-    public boolean compruebaTarjeta(@WebParam(name = "tarjeta") TarjetaBean tarjeta) {
+    public boolean compruebaTarjeta(TarjetaBean tarjeta) {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -210,8 +209,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
      * @param pago
      * @return
      */
-    @WebMethod(operationName = "realizaPago")
-    public synchronized PagoBean realizaPago(@WebParam(name = "pago") PagoBean pago) {
+    public synchronized PagoBean realizaPago(PagoBean pago) {
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -329,8 +327,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
      * @param idComercio
      * @return
      */
-    @WebMethod(operationName = "getPagos")
-    public PagoBean[] getPagos(@WebParam(name = "idComercio") String idComercio) {
+    public PagoBean[] getPagos(String idComercio) {
 
         PreparedStatement pstmt = null;
         Connection pcon = null;
@@ -403,8 +400,8 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
      * @param idComercio
      * @return numero de registros afectados
      */
-    @WebMethod(operationName = "delPagos")
-    public int delPagos(@WebParam(name = "idComercio") String idComercio) {
+
+    public int delPagos(String idComercio) {
 
         PreparedStatement pstmt = null;
         Connection pcon = null;
@@ -454,13 +451,11 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
      * TODO: Metodos isPrepared() y setPrepared()
      */
     /********************************************************/
-    @WebMethod(operationName = "isPrepared")
     public boolean isPrepared() {
         return prepared;
     }
 
-    @WebMethod(operationName = "setPrepared")
-    public void setPrepared(@WebParam(name = "prepared") boolean prepared) {
+    public void setPrepared(boolean prepared) {
         this.prepared = prepared;
     }
     /********************************************************/
@@ -468,7 +463,6 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
     /**
      * @return the debug
      */
-    @WebMethod(operationName = "isDebug")
     public boolean isDebug() {
         return debug;
     }
@@ -476,15 +470,13 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
     /**
      * @param debug the debug to set
      */
-    @WebMethod(operationName = "setDebug")
-    public void setDebug(@WebParam(name = "debug") boolean debug) {
+    public void setDebug(boolean debug) {
         this.debug = debug;
     }
 
     /**
      * @param debug the debug to set
      */
-    @WebMethod(exclude=true)
     public void setDebug(String debug) {
         this.debug = (debug.equals("true"));
     }
@@ -505,14 +497,12 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
      * Note: Annotations are not needed
      */
     @Override
-    @WebMethod(operationName = "isDirectConnection")
     public boolean isDirectConnection() {
         return super.isDirectConnection();
     }
 
     @Override
-    @WebMethod(operationName = "setDirectConnection")
-    public void setDirectConnection(@WebParam(name = "directConnection") boolean directConnection) {
+    public void setDirectConnection(boolean directConnection) {
         super.setDirectConnection(directConnection);
     }
 }
