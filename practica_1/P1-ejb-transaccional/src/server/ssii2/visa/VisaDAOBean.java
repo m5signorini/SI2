@@ -353,7 +353,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
         } catch (Exception e) {
             errorLog(e.toString());
             ret = false;
-            throw new EJBException("Pago incorrecto");
+            throw new EJBException("Pago incorrecto: error en su insercion");
         } finally {
             try {
                 if (rs != null) {
