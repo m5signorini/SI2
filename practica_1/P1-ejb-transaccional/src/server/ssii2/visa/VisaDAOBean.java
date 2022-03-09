@@ -316,7 +316,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
             }/****************/
 
             // Obtener id.autorizacion
-            if (ret) {                
+            if (ret) {               
 
                 /* TODO Permitir usar prepared statement si
                  * isPrepared() = true */
@@ -341,8 +341,11 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
                     pago.setCodRespuesta(rs.getString("codRespuesta"));
                 } else {
                     ret = false;
+                    throw new EJBException("Pago no realizado");
                 }
-
+            }
+            else {
+                throw new EJBException("Error en la insercion del pago");
             }
         } catch (EJBException ejb) {
             errorLog(ejb.toString());
@@ -350,6 +353,7 @@ public class VisaDAOBean extends DBTester implements VisaDAOLocal {
         } catch (Exception e) {
             errorLog(e.toString());
             ret = false;
+            throw new EJBException("Pago incorrecto");
         } finally {
             try {
                 if (rs != null) {
