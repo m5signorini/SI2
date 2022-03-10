@@ -25,41 +25,48 @@ import java.util.logging.Logger;
  */
 @MessageDriven(mappedName = "jms/VisaPagosQueue")
 public class VisaCancelacionJMSBean extends DBTester implements MessageListener {
-  static final Logger logger = Logger.getLogger("VisaCancelacionJMSBean");
-  @Resource
-  private MessageDrivenContext mdc;
+    static final Logger logger = Logger.getLogger("VisaCancelacionJMSBean");
+    @Resource
+    private MessageDrivenContext mdc;
 
-  private static final String UPDATE_CANCELA_QRY = null;
-   // TODO : Definir UPDATE sobre la tabla pagos para poner
-   // codRespuesta a 999 dado un código de autorización
+    // TODO : Definir UPDATE sobre la tabla pagos para poner
+    // codRespuesta a 999 dado un código de autorización
+    private static final String UPDATE_CANCELA_QRY = null;
+
+    // Obtener el código de respuesta del pago cuyo idAutorizacion 
+    // coincida con lo recibido por el mensaje
+    private static final String SELECT_CODERES_QRY = null;
+
+    // Rectificar el saldo de la tarjeta que realizó el pago
+    private static final String UPDATE_TARJETA_QRY = null;
 
 
-  public VisaCancelacionJMSBean() {
-  }
+    public VisaCancelacionJMSBean() {
+    }
 
-  // TODO : Método onMessage de ejemplo
-  // Modificarlo para ejecutar el UPDATE definido más arriba,
-  // asignando el idAutorizacion a lo recibido por el mensaje
-  // Para ello conecte a la BD, prepareStatement() y ejecute correctamente
-  // la actualización
-  public void onMessage(Message inMessage) {
-      TextMessage msg = null;
+    // TODO : Método onMessage de ejemplo
+    // Modificarlo para ejecutar el UPDATE definido más arriba,
+    // asignando el idAutorizacion a lo recibido por el mensaje
+    // Para ello conecte a la BD, prepareStatement() y ejecute correctamente
+    // la actualización
+    public void onMessage(Message inMessage) {
+        TextMessage msg = null;
 
-      try {
-          if (inMessage instanceof TextMessage) {
-              msg = (TextMessage) inMessage;
-              logger.info("MESSAGE BEAN: Message received: " + msg.getText());
-          } else {
-              logger.warning(
-                      "Message of wrong type: "
-                      + inMessage.getClass().getName());
-          }
-      } catch (JMSException e) {
-          e.printStackTrace();
-          mdc.setRollbackOnly();
-      } catch (Throwable te) {
-          te.printStackTrace();
-      }
+        try {
+            if (inMessage instanceof TextMessage) {
+                msg = (TextMessage) inMessage;
+                logger.info("MESSAGE BEAN: Message received: " + msg.getText());
+            } else {
+                logger.warning(
+                        "Message of wrong type: "
+                        + inMessage.getClass().getName());
+            }
+        } catch (JMSException e) {
+            e.printStackTrace();
+            mdc.setRollbackOnly();
+        } catch (Throwable te) {
+            te.printStackTrace();
+        }
   }
 
 
