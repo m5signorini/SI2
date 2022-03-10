@@ -14,10 +14,13 @@ import javax.naming.InitialContext;
 
 public class VisaQueueMessageProducer {
 
-    // TODO: Anotar los siguientes objetos para
+    // Anotar los siguientes objetos para
     // conectar con la connection factory y con la cola
     // definidas en el enunciado
+    @Resource(mappedName = "jms/VisaConnectionFactory")
     private static ConnectionFactory connectionFactory;
+
+    @Resource(mappedName = "jms/VisaColaPagos")
     private static Queue queue;
 
     // Método de prueba
@@ -65,8 +68,13 @@ public class VisaQueueMessageProducer {
         }
 
         try {
-          // TODO: Inicializar connectionFactory
+          // Inicializar connectionFactory
           // y queue mediante JNDI
+          /*****************/
+          //InitialContext jndi = new InitialContext();
+          //connectionFactory = (ConnectionFactory)jndi.lookup("jms/VisaConnectionFactory");
+          //queue = (Queue)jndi.lookup("jms/VisaColaPagos");
+          /*****************/
 
           connection = connectionFactory.createConnection();
           session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);

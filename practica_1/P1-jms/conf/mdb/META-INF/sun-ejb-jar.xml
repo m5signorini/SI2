@@ -4,7 +4,10 @@
   <enterprise-beans>
     <ejb>
       <ejb-name>VisaCancelacionJMSBean</ejb-name>
-      <!-- TODO - definir el nombre de la connection factory -->
+      <!-- definir el nombre de la connection factory -->
+      <mdb-connection-factory>
+        <jndi-name>jms/VisaConnectionFactory</jndi-name>
+      </mdb-connection-factory>
     </ejb>
   </enterprise-beans>
 </sun-ejb-jar>
