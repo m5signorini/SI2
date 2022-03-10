@@ -200,7 +200,8 @@ private void printAddresses(HttpServletRequest request, HttpServletResponse resp
         // Use null instead of boolean
         try{
             pago = dao.realizaPago(pago);
-            if (pago == null) {      
+            if (pago == null) {   
+                if (sesion != null) sesion.invalidate();   
                 enviaError(new Exception("Pago incorrecto"), request, response);
                 return;
             }
