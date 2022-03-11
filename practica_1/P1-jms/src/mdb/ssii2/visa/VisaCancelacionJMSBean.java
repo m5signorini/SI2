@@ -33,13 +33,13 @@ public class VisaCancelacionJMSBean extends DBTester implements MessageListener 
     // codRespuesta a 999 dado un código de autorización
     private static final String UPDATE_CANCELA_QRY = 
         "update pago " +
-        "set codrespuesta = 999 " +
+        "set codrespuesta = '999' " +
         "where idautorizacion = ?";
 
     // Obtener el código de respuesta del pago cuyo idAutorizacion 
     // coincida con lo recibido por el mensaje
     private static final String SELECT_CODERES_QRY = 
-        "select codrespuesta " +
+        "select codrespuesta, importe, numerotarjeta " +
         "from pago " +
         "where idautorizacion = ?";
 
@@ -63,7 +63,7 @@ public class VisaCancelacionJMSBean extends DBTester implements MessageListener 
         /*************************/
         ResultSet rs = null;
         Connection con = null;
-        String idReceived = null;
+        int idReceived = -1;
         String codRespuesta = null;
         String numTarjeta = null;
         double importe = 0;
@@ -77,27 +77,33 @@ public class VisaCancelacionJMSBean extends DBTester implements MessageListener 
 
                 /*****************************/
                 con = getConnection();
-                idReceived = msg.getText();
+
+                try {
+                    idReceived = Integer.parseInt(msg.getText());
+                 }
+                 catch (NumberFormatException ne) {
+                    idReceived = -1;
+                 }
 
                 // Comprobar codigo de respuesta es 000
                 pstmt = con.prepareStatement(SELECT_CODERES_QRY);
-                pstmt.setString(1, idReceived);
+                pstmt.setInt(1, idReceived);
                 rs = pstmt.executeQuery();
                 if(!rs.next()) {
-                    throw new JMSException("ERROR: No existe pago con idAutorizacion = " + idReceived);
+                    throw new Exception("ERROR: No existe pago con idAutorizacion = " + idReceived);
                 }
                 importe = rs.getDouble("importe");
                 numTarjeta = rs.getString("numerotarjeta");
                 codRespuesta = rs.getString("codrespuesta");
                 if(!codRespuesta.equals("000")) {
-                    throw new JMSException("ERROR: Codigo de respuesta del pago distinto de 000");
+                    throw new Exception("ERROR: Codigo de respuesta del pago distinto de 000");
                 }
 
                 // Actualizar codigo de respuesta a 999
                 pstmt = con.prepareStatement(UPDATE_CANCELA_QRY);
-                pstmt.setString(1, idReceived);
+                pstmt.setInt(1, idReceived);
                 if(pstmt.executeUpdate() < 1) {
-                    throw new JMSException("ERROR: No se actualizo ningun pago con idAutorizacion = " + idReceived);
+                    throw new Exception("ERROR: No se actualizo ningun pago con idAutorizacion = " + idReceived);
                 }
 
                 // Actualizar tarjeta reintegrando el importe
@@ -105,9 +111,11 @@ public class VisaCancelacionJMSBean extends DBTester implements MessageListener 
                 pstmt.setDouble(1, importe);
                 pstmt.setString(2, numTarjeta);
                 if(pstmt.executeUpdate() < 1) {
-                    throw new JMSException("ERROR: No se actualizo ningun pago con idAutorizacion = " + idReceived);
+                    throw new Exception("ERROR: No se actualizo ninguna tarjeta con numero = " + numTarjeta);
                 }
-
+                rs.close(); rs = null;
+                pstmt.close(); pstmt = null;
+                closeConnection(con); con = null;
                 /*****************************/
             } else {
                 logger.warning(
