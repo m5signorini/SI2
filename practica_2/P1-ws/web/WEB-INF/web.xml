@@ -27,7 +27,7 @@
     -->
     <context-param>
         <param-name>visadaows</param-name>
-        <param-value>http://10.1.7.1:8080/P1-ws-ws/VisaDAOWSService</param-value>
+        <param-value>http://10.250.1.58:8080/P1-ws-ws/VisaDAOWSService</param-value>
     </context-param>
 
     <!-- Definición de filtros que dispone la aplicación. Los filtro se definen
