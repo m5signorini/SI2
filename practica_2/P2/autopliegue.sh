@@ -1,4 +1,10 @@
 #!/bin/bash
+# Limpiar base de datos
+cd P1-base
+ant regenerar-db
+cd -
+
+# Desplegar
 for i in P1-base P1-ws P1-ejb-servidor-remoto P1-ejb-cliente-remoto; do
     cd $i
     ant replegar; ant delete-pool-local
