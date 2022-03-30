@@ -32,6 +32,7 @@ ant empaquetar-cliente
 Despliegue:
 ant desplegar-servicio
 ant desplegar-cliente
+ant replegar
 ant replegar-servicio
 ant replegar-cliente
 ant redesplegar
@@ -170,6 +171,11 @@ ant limpiar-todo
   	</target>
 
        <!--	de desplegar servicio	retrievestubs="${build.client}/WEB-INF/lib" -->
+	
+	<target name="replegar" description="Repliega la aplicacion, cliente y servicio" >
+		<antcall target="replegar-cliente" />
+		<antcall target="replegar-servicio" />
+	</target>
 
 	<target name="replegar-cliente" description="Repliega la aplicacion" >
                <exec executable="${asadmin}">
