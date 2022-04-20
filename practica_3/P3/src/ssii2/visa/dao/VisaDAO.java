@@ -102,12 +102,14 @@ public class VisaDAO extends DBTester {
         String qry = "insert into pago("
                     + "idTransaccion,"
                     + "importe,idComercio,"
-                    + "numeroTarjeta)"
+                    + "numeroTarjeta,instancia,ip)"
                     + " values ("
                     + "'" + pago.getIdTransaccion() + "',"
                     + pago.getImporte() + ","
                     + "'" + pago.getIdComercio() + "',"
-                    + "'" + pago.getTarjeta().getNumero() + "'"
+                    + "'" + pago.getTarjeta().getNumero() + "',"
+                    + "'" + pago.getInstancia() + "',"
+                    + "'" + pago.getIp() + "'"
                     + ")";
         return qry;
     }
