@@ -241,7 +241,7 @@ public class VisaDAO extends DBTester {
                pstmt.setDouble(2, pago.getImporte());
                pstmt.setString(3, pago.getIdComercio());
                pstmt.setString(4, pago.getTarjeta().getNumero());
-               pstmt.setString(5, pago.getInstancia()));
+               pstmt.setString(5, pago.getInstancia());
                pstmt.setString(6, pago.getIp());
                ret = false;
                if (!pstmt.execute()
