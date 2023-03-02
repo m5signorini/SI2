@@ -1,6 +1,9 @@
 # SI2
 Sistemas Informáticos II
 
+Para ver más información sobre ejecución y comandos, ir a docs:
+- https://github.com/m5signorini/SI2/tree/main/docs
+
 # Comandos
 - `export J2EE_HOME=/opt/glassfish4/glassfish`
 
