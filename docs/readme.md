@@ -87,7 +87,7 @@ FALLO TARJETA NO AUTORIZADA CUANDO LA BD ESTA BN (+-)
 
 **Paso 2:** Randomizar mac’s en configuración antes de ejecutar máquina virtual: 
 
-sh si2fixMAC.sh 2401 6 2 
+- sh si2fixMAC.sh 2401 6 2 
 
 **Paso 3:** Ejecutar y configurar máquina virtual, pareja 6
 
@@ -97,11 +97,9 @@ sh si2fixMAC.sh 2401 6 2
 
 **Paso 7:**  ¡No cambiar de terminal!
 
-export J2EE\_HOME=/opt/glassfish4/glassfish/
-
-export PATH=/opt/jdk1.8.0\_111/bin:${PATH}
-
-export JAVA\_HOME=/opt/jdk1.8.0\_111
+- export J2EE\_HOME=/opt/glassfish4/glassfish/
+- export PATH=/opt/jdk1.8.0\_111/bin:${PATH}
+- export JAVA\_HOME=/opt/jdk1.8.0\_111
 
 **Paso 8:** Cambiar en codigo ips a 10.250.1.56
 
@@ -124,49 +122,34 @@ export JAVA\_HOME=/opt/jdk1.8.0\_111
 
 **EN CLASE HACER:**
 
-export J2EE\_HOME=/opt/glassfish4/glassfish/
-
-export PATH=/opt/jdk1.8.0\_111/bin:${PATH}
-
-export JAVA\_HOME=/opt/jdk1.8.0\_111
+- export J2EE\_HOME=/opt/glassfish4/glassfish/
+- export PATH=/opt/jdk1.8.0\_111/bin:${PATH}
+- export JAVA\_HOME=/opt/jdk1.8.0\_111
 
 **EN CASA HACER:**
 
-export AS\_JAVA=/usr/lib/jvm/java-8-openjdk-amd64
-
-export PATH=/opt/glassfish4/glassfish/bin:${PATH}
-
-export J2EE\_HOME=/opt/glassfish4/glassfish
-
-sudo sh ./virtualip.sh wlo1
-
-sudo sh ./virtualip.sh wlp5s0
+- export AS\_JAVA=/usr/lib/jvm/java-8-openjdk-amd64
+- export PATH=/opt/glassfish4/glassfish/bin:${PATH}
+- export J2EE\_HOME=/opt/glassfish4/glassfish
+- sudo sh ./virtualip.sh wlo1
+- sudo sh ./virtualip.sh wlp5s0
 
 Iniciar maquina virtual y ejecutar:
-
-asadmin start-domain domain1
+- asadmin start-domain domain1
 
 En P1-base ejecutar, cuando el servidor haya sido started:
-
-sudo ant replegar limpiar-todo unsetup-db todo
-
-sudo ant replegar-servicio compilar-servicio empaquetar-servicio desplegar-servicio
+- sudo ant replegar limpiar-todo unsetup-db todo
+- sudo ant replegar-servicio compilar-servicio empaquetar-servicio desplegar-servicio
 
 Si fallan cosas, usar en la VM:
-
-asadmin stop-domain domain1
-
-sudo service postgresql-8.4 restart
-
-asadmin start-domain domain1
-
-(Cerrar pgadmin)
+-  asadmin stop-domain domain1
+- sudo service postgresql-8.4 restart
+- asadmin start-domain domain1
+- (Cerrar pgadmin)
 
 Después volver a  ejecutar fuera VM:
-
-sudo ant replegar limpiar-todo unsetup-db todo
-
-admin glasfish puerto 4848: usuario: admin ; contraseña: adminadmin
+- sudo ant replegar limpiar-todo unsetup-db todo
+- admin glasfish puerto 4848: usuario: admin ; contraseña: adminadmin
 
 
 
@@ -180,10 +163,10 @@ SELECT \* FROM pago;
 ## Tocar
 find . -type f -exec touch {} +
 
-– Sacerdote Jose Jorro, 2022
+– Jose Jorro, 2022
 
+## EXAMEN
 “
-
 Los del grupo 2311 hemos tenido el examen de las prácticas de SI2 esta mañana, os explico lo que nos ha entrado para quien le interese
 
 Eran 3 ejercicios, y la puntuación era 5 ptos el ejercicio en el que saques más nota y 2.5 ptos los otros dos. En el examen te dejan usar internet y, a nosotros por lo menos, nos han dejado llegar antes al laboratorio y tener las máquinas ya preparadas con todo desplegado antes de que empezara el examen.
@@ -195,8 +178,9 @@ Había que modificar el testbd.jsp para que en el apartado getPagos incluyese 2 
 El ejercicio 2 era como el ejercicio 7 del .zip que mandó César y viene muy bien explicado en un apartado del enunciado de la práctica 2.
 
 El ejercicio 3 era teoría sobre afinidad de sesión, te ponían un par de capturas de un balanceador de carga y tenías que explicar por qué había ocurrido un problema de afinidad de sesión.
+“
 
-“ – Quintanilla, 2022.
+– Q\*\*\*\*\*\*\*a, 2022.
 
 **Pasos (añadir campos en búsquedas de pagos):**
 
