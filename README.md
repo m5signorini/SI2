@@ -1,7 +1,7 @@
 # SI2
 Sistemas Informáticos II
 
-Para ver más información sobre ejecución y comandos, ir a docs:
+Para ver más información para solucionar problemas e instrucciones, ir a docs y ver el readme:
 - https://github.com/m5signorini/SI2/tree/main/docs
 
 # Comandos
